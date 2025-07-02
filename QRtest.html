@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>QR 掃描測試</title>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+  <h2>點擊下方按鈕開始掃描</h2>
+  <div id="reader" style="width:300px;"></div>
+
+  <button onclick="startScan()">▶️ 開始掃描</button>
+  <button onclick="stopScan()">⏹️ 停止掃描</button>
+  <button onclick="showCurrentCode()">📄 顯示目前掃描結果</button>
+
+  <script>
+    const html5QrCode = new Html5Qrcode("reader");
+    let currentQRCodeText = "";  // 儲存最新掃描結果
+
+    function startScan() {
+      html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        (decodedText) => {
+          currentQRCodeText = decodedText;
+          alert("掃描結果：" + decodedText);
+          stopScan(); // 自動停止
+        },
+        (errorMessage) => {
+          // 可以忽略掃不到時的錯誤
+        }
+      ).catch(err => {
+        console.error("無法啟動相機", err);
+      });
+    }
+
+    function stopScan() {
+      html5QrCode.stop().then(() => {
+        console.log("已停止掃描");
+      }).catch(err => {
+        console.error("停止掃描失敗", err);
+      });
+    }
+
+    function showCurrentCode() {
+      alert("目前掃描結果：" + (currentQRCodeText || ""));
+    }
+  </script>
+</body>
+</html>
