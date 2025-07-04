@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>QR 掃描測試</title>
-  <script src='scripts/jquery-1.8.3-min.js'></script>  
+ <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
   <script src="KeyQRCode.js"></script>
 </head>
 <body>
@@ -17,6 +19,7 @@
   <button onclick="startScan()">▶️ 開始掃描</button>
   <button onclick="stopScan()">⏹️ 停止掃描</button>
   <button onclick="showCurrentCode()">📄 顯示目前掃描結果</button>
+<div id="qrcode"></div>
 
   <script>
     const html5QrCode = new Html5Qrcode("reader");
@@ -50,7 +53,14 @@
     function showCurrentCode() {
       alert("目前掃描結果：" + (currentQRCodeText || ""));
     }
-
+$(document).ready(function () {    
+	  var qrcode = new QRCode(document.getElementById("qrcode"), {
+	    text: "https://example.com",
+	    width: 128,
+	    height: 128,
+	  });
+   
+});
 
 
 
