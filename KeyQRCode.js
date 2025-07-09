@@ -136,3 +136,7 @@ KeyQRCode.prototype.StopScan = function(){
 }
 
 
+
+function testf(){
+	alert('測試OnChangeFunc');
+}
