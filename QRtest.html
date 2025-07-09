@@ -59,14 +59,16 @@
 //     function showCurrentCode() {
 //       alert("目前掃描結果：" + (currentQRCodeText || ""));
 //     }
-// $(document).ready(function () {    
-// 	  var qrcode = new QRCode(document.getElementById("qrcode"), {
-// 	    text: "https://example.com",
-// 	    width: 128,
-// 	    height: 128,
-// 	  });
-   
-// });
+$(document).ready(function () {    
+	  // var qrcode = new QRCode(document.getElementById("qrcode"), {
+	  //   text: "https://example.com",
+	  //   width: 128,
+	  //   height: 128,
+	  // });
+    function showCurrentCode(){
+      alert("掃描結果："+testqr.Value);
+    }
+});
 
 
 

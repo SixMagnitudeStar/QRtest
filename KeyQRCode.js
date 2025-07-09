@@ -1,13 +1,12 @@
 $(document).ready(function () {    
     $(".KeyQRCode").each(function(){ 
-        if (KeyObjCheck($(this))) {
+  
             var ID = $(this).attr("ID");
             window[ID] = new KeyQRCode(ID,$(this));               
             window[ID].Init();
             // window[ID].LoadData();
             // window[ID].RefreshData();         
-            // window[ID].EventBind();
-        }                
+              
     });     
 });
 
@@ -75,11 +74,6 @@ Object.defineProperty(KeyQRCode.prototype, "Value",{
 
 KeyQRCode.prototype.Init = function(){
 
-	// 創建QRCode掃碼物件
-	const html5QrCode = new Html5Qrcode(readerID);
-	
-	// 將QRCode掃碼物件存取進KeyQRCode屬性內，方便在Method中呼叫
-	this.html5QrCode = html5QrCode;
 
 
 	// QRCode掃碼的區塊
@@ -100,6 +94,7 @@ KeyQRCode.prototype.Init = function(){
 	const readerID = this.ID+'_reader';// 用物件ID+_reader組成掃碼區塊id
 
 	reader.attr('ID', readerID);
+
 
 	// QRCode掃描按鈕
 	const qrBtn = $('<button>QRCode scan</button>');
@@ -137,6 +132,15 @@ KeyQRCode.prototype.Init = function(){
 
 	// 將物件相關HTML元素加入DOM
 	this.Element.append(container);
+
+
+	
+	// 創建QRCode掃碼物件
+	const html5QrCode = new Html5Qrcode(readerID);
+	
+	// 將QRCode掃碼物件存取進KeyQRCode屬性內，方便在Method中呼叫
+	this.html5QrCode = html5QrCode;
+
 
 }
 
