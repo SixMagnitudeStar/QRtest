@@ -18,22 +18,30 @@
  
 	<label id='testlabel'>開啟相機</label>
 
+	<label id='testlabel2'>開啟檔案</label>
+	
 <script>
 	
 	window.onload = function(){
 		alert('hello');
 		const f = $('#testfile');
 		const l = $('#testlabel');
+		const l2 = $('#testlabel2');
 		l.on('click', function(){
 			f.attr('capture', 'environment');
 			f.click();
-		})
+		}
 
+		l2.on('click', function(){
+			f.attr('capture', '');
+			f.click();
+		})
 	}
 </script>
 
 </body>
 </html>
+
 
 
 
