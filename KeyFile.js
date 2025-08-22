@@ -1,11 +1,11 @@
 $(document).ready(function () {    
     $(".KeyFile").each(function(){ 
-        // if (KeyObjCheck($(this))) {
+        if (KeyObjCheck($(this))) {
             var ID = $(this).attr("ID");
             window[ID] = new KeyFile(ID,$(this));               
             window[ID].Init();    
             window[ID].RefreshData();        
-        // }                
+        }                
     });     
 });
 
@@ -32,9 +32,9 @@ const KeyFile = function(ID, Element){
     }   
 
 
-    this.OnChangeFunc = null;
-    if(typeof(Element.attr("OnChangeFunc")) != "undefined") {  
-        this.OnChangeFunc = Element.attr("OnChangeFunc");
+    this.OnChange = null;
+    if(typeof(Element.attr("OnChange")) != "undefined") {  
+        this.OnChange = Element.attr("OnChange");
     } 
 
     //取得 AutoClear (上傳後是否自動清空暫存)
@@ -61,11 +61,19 @@ const KeyFile = function(ID, Element){
         this.Field = Element.attr("Field");
     }       
 
+
+    this.Mode = 'common';
+    if(typeof(Element.attr("Mode")) != "undefined") {  
+        this.Mode = Element.attr("Mode").trim();
+    }       
+
     //取得 FileNameChangeSeq (上傳檔名是否自動轉為序號)
     this.FileNameChangeSeq = false;
     if(typeof(Element.attr("FileNameChangeSeq")) != "undefined") {  
         this.FileNameChangeSeq = Element.attr("FileNameChangeSeq").toUpperCase() == "TRUE";  
     } 
+
+    this.Label = null;
 
     this.KeyNo  = "";                   //檔案上傳目錄名稱
     this.Files  = [];                   //檔案集合(KeyFileItem)   
@@ -125,19 +133,46 @@ KeyFile.prototype._DefaultStyle = {
 KeyFile.prototype.Init = function(){
     
     // 上傳檔案的input標籤
-    let FileInput = $(`<input id="${this.ID}fileUploadInput" type="file" multiple>`);
+    let FileInput = null;
+
+    if (this.Mode === 'camera'){
+        FileInput = $(`<input id="${this.ID}fileUploadInput" type="file" multiple>`);
+    }else{
+        FileInput =  $(`<input id="${this.ID}fileUploadInput" type="file" accept="image/*" capture="environment" multiple>`);
+    }
+
     this._FileInput = FileInput;
 
-    let inputLabelHtml = '<label class="file-upload-wrapper">'
+    let inputLabelHtml = '<div class="file-upload-wrapper">'
                        + '選取檔案'
-                       + '</label>';
+                       + '</div>';
 
     // 代替input標籤讓使用者點擊的label (方便樣式處理)
     let inputLabel = $(inputLabelHtml);
 
     if (this.MaxCount){
-        inputLabel.text(`選取檔案(最大上傳傳數量：${this.MaxCount})`);
+       // inputLabel.text(`選取檔案\n(最大上傳數：)`);
+        inputLabel.html(`選取檔案(最大上傳數：${this.MaxCount})`);
     }
+
+    const icon = $('<img class="cameraIcon" src="images/camera.png" alt="上傳檔案"/>');
+
+    icon.on('click', function(event){
+        FileInput.attr('capture','environment');
+        //FileInput.click();
+        event.stopPropagation();
+
+        return;
+    })
+
+
+    const inputWraper = $('<div></div>');
+    inputWraper.css({
+        'position':'relative',
+        'display': 'flex'
+    
+    });
+
 
     let confirm_btn = $('<button class="uploadbtn">新增</button>');
 
@@ -150,6 +185,8 @@ KeyFile.prototype.Init = function(){
     let LabelText = this.Element.attr('LabelText');
     let label = $('<p></p>').text(LabelText);
 
+
+    this.Label = label;
 
     //// 取得CSS樣式設定
     let LabelFontSize = this._DefaultStyle.LabelFontSize;//取得標題預設資料字體大小
@@ -171,11 +208,10 @@ KeyFile.prototype.Init = function(){
             });
     }
 
-    
     this._FilesArray = [];
     this.Files = [];    
 
-    let CurOnChangeFunc = this.OnChangeFunc;
+    let CurOnChangeFunc = this.OnChange;
 
 
     // 當使用者選取檔案, 將選取檔案加入檔案佇列fileArray中
@@ -223,9 +259,12 @@ KeyFile.prototype.Init = function(){
     // 點擊上傳檔案的label , 觸發檔案上傳input物件的點擊事件, 展開選取檔案視窗
     inputLabel.on('click', ()=>{
         // 如果enabled = false, 直接離開不觸發input點擊事件上傳檔案
+
         if (!this.Enabled){
             return;
         }
+        FileInput.removeAttr('capture');
+
         FileInput.click();
     })
 
@@ -233,17 +272,28 @@ KeyFile.prototype.Init = function(){
         inputLabel.hide();
     }
 
-
+    //inputLabel.append(icon);
+    inputWraper.append(inputLabel, icon);
     //  將所有生成的標籤加入Element中
-    this.Element.append(label, inputLabel,FileInput, FileList);
+    this.Element.append(label, inputWraper, FileInput, FileList);
 }
 
 
+KeyFile.prototype.LabelChange = function(){
+    if (this._FilesArray.length == 0){
+        this.Label.text(this.ID + ' ：目前暫無檔案');
+    }else{
+        this.Label.text(this.ID);
+    }
+}
 
-KeyFile.prototype.renderFileList= function(){
+
+KeyFile.prototype.renderFileList= function(){;
 
     // 清空畫面上檔案列表UI
     this._FileList.empty();
+
+    this.LabelChange();
 
     // 如果沒有選擇的檔案，離開
     if (!this._FilesArray && this._FilesArray.length === 0) return;
@@ -274,7 +324,8 @@ KeyFile.prototype.renderFileList= function(){
         deleteBtn.on('click', () => {
             this._FilesArray.splice(i, 1)
             this.Files.splice(i, 1)
-            item.remove();
+            URL.revokeObjectURL(url); // 小加分：避免 memory leak
+            this.renderFileList();
         });     
 
         // 區塊內放入連結標籤與刪除按鈕
@@ -383,7 +434,7 @@ KeyFile.prototype.RefreshData = function(){
     };
 
     this.Clear();
-    this.KeyNo = 'AaxA1';
+    this.KeyNo = 'AA1';
 
     fetch(gFilesChangeUrl + this.KeyNo, { method: 'GET' })
     .then(response => {
@@ -392,7 +443,6 @@ KeyFile.prototype.RefreshData = function(){
         }
 
         const contentType = response.headers.get("Content-Type") || "";
-        alert(contentType);
 
         if (contentType.includes("application/zip")) {
             return response.blob().then(blob => ({ type: "zip", data: blob }));
@@ -412,7 +462,6 @@ KeyFile.prototype.RefreshData = function(){
     .then(result => {
         // 🚫 如果是 JSON 回應，就直接結束，不繼續處理 zip
         if (result.type === "json") {
-            this.Element.find('p').text(result.data); // 顯示錯誤或提示訊息
             return; 
         }
 
@@ -446,133 +495,23 @@ KeyFile.prototype.RefreshData = function(){
     .then(() => {
         if (this._FilesArray.length > 0) {
             console.log("所有檔案已處理完畢");
-            this.renderFileList();
-        } else {
-            this.Element.find('p').text(this.ID+' 目前暫無檔案');
         }
+        this.renderFileList();
+          
     })
     .catch(error => {
         console.error("處理檔案時發生錯誤:", error);
         alert(error.message);
     });
 }
-// KeyFile.prototype.RefreshData = function(){   
-//     // if (!this.DataSet || !this.KeyField) return;
 
-//     // let state = this.DataSet.State;
+function test(){
 
-//     const mimeTypes = {
-//         'txt': 'text/plain',
-//         'html': 'text/html',
-//         'jpg': 'image/jpeg',
-//         'jpeg': 'image/jpeg',
-//         'png': 'image/png',
-//         'gif': 'image/gif',
-//         'pdf': 'application/pdf',
-//         'csv': 'text/csv',
-//         'json': 'application/json',
-//         'doc': 'application/msword',
-//         'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-//         'xls': 'application/vnd.ms-excel',
-//         'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-//     };
-
-//     //清空暫存
-//     this.Clear();
-
-//     // this.KeyNo = this.DataSet.FieldByName(this.KeyField).Value;  
-
-//     // if (this.KeyNo == '') return;
-    
-//     this.KeyNo = 'AaxA1';
-
-//     fetch(gFilesChangeUrl+ this.KeyNo, {
-//         method: 'GET'
-//     })  
-//     // fetch(gWebConnect + 'Files/' + this.KeyNo, {
-//     //     method: 'GET'
-//     // })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error("伺服器回應錯誤，狀態碼：" + response.status);
-//         }
-
-//         const contentType = response.headers.get("Content-Type") || "";
-//         alert(contentType);   
-
-//         if (contentType.includes("application/zip")) {
-//             return response.blob(); // 返回 ZIP 檔案的 Blob
-//         } else if (contentType.includes("application/json")) {
-//             // 明確處理 JSON 回應
-//             alert('joson');
-//             return response.json().then(data => {
-//                 const msg = data.error || data.message || "伺服器回應格式錯誤";
- 
-//                 console.log('測試'+msg);
-//             });
-//         } else {
-//             // 非 ZIP 且非 JSON 的回應，作為未知格式處理
-//             return response.text().then(text => {
-//                 throw new Error("伺服器回應格式錯誤: " + text);
-//             });
-
-//         }
-//     .then(blob => {
-//         return JSZip.loadAsync(blob);
-//     })
-//     .then(zip => {
-//         if (!zip) return; // 如果不是 zip，就不要繼續
-
-//         const filePromises = [];
-
-//         zip.forEach((relativePath, zipEntry) => {
-//             if (!zipEntry.dir) {
-//                 const promise = zipEntry.async('blob').then(fileContent => {
-//                     const ext = zipEntry.name.split('.').pop().toLowerCase();
-//                     const mime = mimeTypes[ext] || 'application/octet-stream';
-//                     const fileObj = new File([fileContent], zipEntry.name, { type: mime });
-//                     this._FilesArray.push(fileObj);
-
-//                     let FileItem = new KeyFileItem();
-//                     FileItem.Index = this.Files.length;
-//                     FileItem.Name  = zipEntry.name;              
-//                     this.Files.push(FileItem); 
-//                 });
-//                 filePromises.push(promise);
-//             }
-//         });
-
-//         return Promise.all(filePromises);
-//     })
-//     .then(() => {
-//         console.log("所有檔案已處理完畢");
-
-//         //當有設定要轉換檔名 且 有指定檔名欄位時，檔名依照 檔名欄位的值
-//         if(this.FileNameChangeSeq) {
-//             let FileNames = this.DataSet ? this.DataSet.FieldByName(this.Field).Value.trim() : "";
-//             if(FileNames != ''){
-//                 let Names = FileNames.split('|');
-//                 for (let i = 0; i < Names.length; i++) {
-//                     this.Files[i].Name = Names[i];               
-//                 }    
-//             }    
-//         }
-                
-//         this.renderFileList();        
-//         if (this._FilesArray.length == 0){
-//             this.Element.find('p').text(this.ID+' 目前暫無檔案');
-//         }
-//         // this.DataSet.State = state;
-//     })
-//     .catch(error => {
-//         console.error("處理 ZIP 檔時發生錯誤:", error);
-//         alert(error.message);
-//     });
-
-// }
+}
 
 KeyFile.prototype.Clear = function(){
     this.Files       = [];
-    this._FilesArray = [];
+    this._FilesArray.length = 0;
+    //this._FilesArray = [];
     this._FileList.empty();
 }
