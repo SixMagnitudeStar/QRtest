@@ -6,26 +6,34 @@
   <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-<!-- 
-  <script src="KeyFile.js"></script> -->
+
 </head>
 <body>
+	<p>測試1</p>
 
-  <p>相機模式:</p>
-  <input type="file" accept="image/*" capture="environment">
-<br>
-  <p>檔案模式--////////////---:</p>
-<input type="file" accept="*/*" capture="none">
-  <p>檔案模式222--////////////---:</p>
-<input type="file" accept="*/*" capture="">
+	<input id='testfile'  type="file">
 
-  <p>一般模式:</p>
-<input type="file">
 
-  
-<!--    <div ID='testfile1' Connection_Mode='1'  class='KeyFile' LabelText='夾檔1'  MaxCount='3' Enabled='true'></div> -->
+	<p>測試2</p>
+ 
+	<label id='testlabel'>開啟相機</label>
+
+<script>
+	
+	window.onload = function(){
+		alert('hello');
+		const f = $('#testfile');
+		const l = $('#testlabel');
+		l.on('click', function(){
+			f.click();
+		})
+
+	}
+</script>
+
 </body>
 </html>
+
 
 
 
