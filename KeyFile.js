@@ -1,11 +1,11 @@
 $(document).ready(function () {    
     $(".KeyFile").each(function(){ 
-    //     if (KeyObjCheck($(this))) {
+        if (KeyObjCheck($(this))) {
             var ID = $(this).attr("ID");
             window[ID] = new KeyFile(ID,$(this));               
             window[ID].Init();    
             window[ID].RefreshData();        
-      //  }                
+        }                
     });     
 });
 
@@ -132,7 +132,7 @@ KeyFile.prototype._DefaultStyle = {
 
 KeyFile.prototype.Init = function(){
     
-    // 上傳檔案的input標籤
+    // 接收上傳檔案的input標籤
     let FileInput = null;
 
     if (this.Mode === 'camera'){
@@ -150,8 +150,8 @@ KeyFile.prototype.Init = function(){
     // 代替input標籤讓使用者點擊的label (方便樣式處理)
     let inputLabel = $(inputLabelHtml);
 
+
     if (this.MaxCount){
-       // inputLabel.text(`選取檔案\n(最大上傳數：)`);
         inputLabel.html(`選取檔案(最大上傳數：${this.MaxCount})`);
     }
 
@@ -161,6 +161,7 @@ KeyFile.prototype.Init = function(){
         FileInput.attr('capture','environment');
         //FileInput.click();
         event.stopPropagation();
+        
 
         return;
     })
@@ -263,7 +264,10 @@ KeyFile.prototype.Init = function(){
         if (!this.Enabled){
             return;
         }
-        FileInput.removeAttr('capture');
+
+        if (this.Mode != 'camera'){
+            FileInput.removeAttr('capture');
+        }
 
         FileInput.click();
     })
@@ -296,7 +300,13 @@ KeyFile.prototype.renderFileList= function(){;
     this.LabelChange();
 
     // 如果沒有選擇的檔案，離開
-    if (!this._FilesArray && this._FilesArray.length === 0) return;
+    if (!this._FilesArray || this._FilesArray.length === 0){
+        alert('近來');
+        let a = $('<a>目前暫無檔案</a>');
+        this._FileList.append(a);
+
+        return;
+    } 
         //
     for (let i=0; i<this._FilesArray.length; i++){
 
@@ -331,7 +341,10 @@ KeyFile.prototype.renderFileList= function(){;
         // 區塊內放入連結標籤與刪除按鈕
         item.append(a);
 
-        if (this.Enabled) item.append(deleteBtn);  
+        if (this.Enabled){
+            //
+            item.append(deleteBtn);
+        } 
 
         // 將檔案區塊放入檔案列表
         this._FileList.append(item);
@@ -515,4 +528,3 @@ KeyFile.prototype.Clear = function(){
     //this._FilesArray = [];
     this._FileList.empty();
 }
-

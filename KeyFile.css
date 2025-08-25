@@ -1,0 +1,80 @@
+.file-upload-wrapper {
+  background-color:  white;
+  border-radius: 5px;
+  height: 40px;
+  display: flex !important;
+  align-items: center;     /* 垂直置中 */ 
+  z-index: 999;
+  padding-left: 5%;
+  padding-top: 1%;
+
+  width: 100%;
+}
+
+
+.file-upload-wrapper:hover {
+  background-color: gray;
+}
+
+
+.cameraIcon{
+  position: absolute;
+  margin-top: 0;
+  height : 40px;
+  width : 40px;
+  display: block;
+  z-index: 1000;
+  right: 10px;
+}
+
+input[type="file"] {
+  display: none;
+  pointer-events: none;
+}
+.file-list {
+  margin-top: 1rem;
+}
+
+.file-item {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.file-item button {
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: none;
+  background: #e74c3c;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+/*   width:25%;
+ */
+  flex-shrink: 0;
+  width: auto;
+}
+
+.file-item a {
+/*   width: 70%; */
+  flex-shrink: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+  flex: 1; /* 撐滿剩下的空間 */
+  min-width: 0; /* 避免長字撐爆 */
+/*   margin-left: 5px ; */
+}
+
+.file-item button:hover {
+  background: #c0392b;
+}
+
+
+
+
