@@ -4,7 +4,7 @@ $(document).ready(function () {
             var ID = $(this).attr("ID");
             window[ID] = new KeyFile(ID,$(this));               
             window[ID].Init();    
-            window[ID].RefreshData();        
+           //window[ID].RefreshData();        
                
     });     
 });
@@ -529,5 +529,6 @@ KeyFile.prototype.Clear = function(){
     //this._FilesArray = [];
     this._FileList.empty();
 }
+
 
 
