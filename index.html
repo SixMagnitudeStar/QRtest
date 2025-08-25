@@ -7,6 +7,7 @@
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 <script src="KeyFile.js"></script>
+  <link rel="stylesheet" href="KeyFile.css">
 </head>
 <body>
 	<p>開啟檔案</p>
@@ -17,25 +18,26 @@
 	
 <script>
 	
-	window.onload = function(){
-		alert('hello');
-		const f = $('#testfile');
-		const l = $('#testlabel');
-		const l2 = $('#testlabel2');
-		l.on('click', function(){
-			f.attr('capture', 'environment');
-			f.click();
-		})
+	// window.onload = function(){
+	// 	alert('hello');
+	// 	const f = $('#testfile');
+	// 	const l = $('#testlabel');
+	// 	const l2 = $('#testlabel2');
+	// 	l.on('click', function(){
+	// 		f.attr('capture', 'environment');
+	// 		f.click();
+	// 	})
 
-		l2.on('click', function(){
-			f.removeAttr('capture'); 
-			f.click();
-		})
-	}
+	// 	l2.on('click', function(){
+	// 		f.removeAttr('capture'); 
+	// 		f.click();
+	// 	})
+	// }
 </script>
 
 </body>
 </html>
+
 
 
 
