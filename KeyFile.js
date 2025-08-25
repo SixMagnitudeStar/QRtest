@@ -135,7 +135,7 @@ KeyFile.prototype.Init = function(){
     // 接收上傳檔案的input標籤
     let FileInput = null;
 
-    if (this.Mode === 'camera'){
+    if (this.Mode != 'camera'){
         FileInput = $(`<input id="${this.ID}fileUploadInput" type="file" multiple>`);
     }else{
         FileInput =  $(`<input id="${this.ID}fileUploadInput" type="file" accept="image/*" capture="environment" multiple>`);
@@ -529,6 +529,7 @@ KeyFile.prototype.Clear = function(){
     //this._FilesArray = [];
     this._FileList.empty();
 }
+
 
 
 
