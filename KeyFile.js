@@ -1,11 +1,11 @@
 $(document).ready(function () {    
     $(".KeyFile").each(function(){ 
-        if (KeyObjCheck($(this))) {
+    
             var ID = $(this).attr("ID");
             window[ID] = new KeyFile(ID,$(this));               
             window[ID].Init();    
             window[ID].RefreshData();        
-        }                
+               
     });     
 });
 
@@ -155,11 +155,11 @@ KeyFile.prototype.Init = function(){
         inputLabel.html(`選取檔案(最大上傳數：${this.MaxCount})`);
     }
 
-    const icon = $('<img class="cameraIcon" src="images/camera.png" alt="上傳檔案"/>');
+    const icon = $('<img class="cameraIcon" src="./camera.png" alt="上傳檔案"/>');
 
     icon.on('click', function(event){
         FileInput.attr('capture','environment');
-        //FileInput.click();
+        FileInput.click();
         event.stopPropagation();
         
 
@@ -528,3 +528,4 @@ KeyFile.prototype.Clear = function(){
     //this._FilesArray = [];
     this._FileList.empty();
 }
+
