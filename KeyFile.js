@@ -158,6 +158,7 @@ KeyFile.prototype.Init = function(){
     const icon = $('<img class="cameraIcon" src="./camera.png" alt="上傳檔案"/>');
 
     icon.on('click', function(event){
+        alert('點相機');
         FileInput.attr('capture','environment');
         FileInput.click();
         event.stopPropagation();
@@ -528,4 +529,5 @@ KeyFile.prototype.Clear = function(){
     //this._FilesArray = [];
     this._FileList.empty();
 }
+
 
