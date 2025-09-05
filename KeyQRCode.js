@@ -91,12 +91,11 @@ KeyQRCode.prototype.Init = function(){
 
 	reader.css({
 		//
-		'width': '100vw',
-		'height': '60vh',
+		'width': '100%',
+		'height': '60%',
 		'position': 'absolute',
-		'top': '50%',
-		'left': '50%',
-		'transform': 'translate(-50%, -50%)'		
+		'top': '20%',
+		// 'transform': 'translate(-50%, -50%)'		
 	})
 
 	let close = $('<img src="images/close.png  alt="結束掃描">');
@@ -298,3 +297,4 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
