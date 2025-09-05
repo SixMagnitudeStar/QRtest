@@ -92,7 +92,8 @@ KeyQRCode.prototype.Init = function(){
 	reader.css({
 		'width': '100%',
 		'height': '80%',
-		'position': 'absolute'
+		'position': 'absolute',
+		'z-index': '1000'
 	})
 
 	let close = $('<img src="images/close.png  alt="結束掃描">');
@@ -102,7 +103,8 @@ KeyQRCode.prototype.Init = function(){
 		'height': '30px',
 		'position': 'absolute',
 		'margin-top': '0',
-		'margin-left':'0'
+		'margin-left':'0',
+		'z-index': '1001'
 	})
 
 	close.on('click', ()=>{
@@ -301,6 +303,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
