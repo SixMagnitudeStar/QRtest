@@ -81,7 +81,6 @@ Object.defineProperty(KeyQRCode.prototype, "Value",{
 });
 
 
-
 KeyQRCode.prototype.Init = function(){
 
 
@@ -90,10 +89,13 @@ KeyQRCode.prototype.Init = function(){
 
 
 	reader.css({
+		//
 		'width': '100%',
 		'height': '80%',
 		'position': 'absolute',
 		'z-index': '1000'
+
+		// 'transform': 'translate(-50%, -50%)'		
 	})
 
 	let close = $('<img src="images/close.png" alt="結束掃描">');
@@ -104,8 +106,7 @@ KeyQRCode.prototype.Init = function(){
 		'position': 'absolute',
 		'margin-top': '0',
 		'margin-left':'0',
-		'z-index': '1001',
-  		'background-color': 'red'
+		'z-index': '1001'
 	})
 
 	close.on('click', ()=>{
@@ -115,13 +116,15 @@ KeyQRCode.prototype.Init = function(){
 	});
 
 
-
-
-	reader.append(close);
-	
 	const readerID = this.ID+'_reader';// 用物件ID+_reader組成掃碼區塊id
 
 	reader.attr('ID', readerID);
+
+	reader.append(close);
+
+
+
+
 
 	const overlay = $('<div></div>');
 	overlay.css({
@@ -137,6 +140,7 @@ KeyQRCode.prototype.Init = function(){
 	});
 	$('#' + readerID).append(overlay);
 	
+
 	// QRCode掃描按鈕
 	const qrBtn = $('<button>QRCode888 scan</button>');
 
@@ -199,7 +203,6 @@ KeyQRCode.prototype.Init = function(){
 
 }
 
-// 有一個Method，傳入參數，可以指定QRCode要
 
 
 KeyQRCode.prototype.getIconCss = function(){
@@ -322,6 +325,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
