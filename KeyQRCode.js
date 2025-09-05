@@ -231,10 +231,11 @@ KeyQRCode.prototype.StartScan = function(){
         return;
     }
 
+
 	this.html5QrCode.start(
-		{ facingMode: "environment" },
-		{ fps: 10, qrbox: 350},
-		(decodedText) => {
+	    { facingMode: "environment" },
+	    { fps: 10, qrbox: 450 },
+	    (decodedText) => {
 			this.currentQRCodeText = decodedText;
 			this.StopScan();// 自動停止
 
@@ -257,13 +258,18 @@ KeyQRCode.prototype.StartScan = function(){
 			if (CurOnChangeFunc && typeof window[CurOnChangeFunc] === "function") {
             	window[CurOnChangeFunc]();  // 執行 MyFunc()
         	}
-		},
-		(errorMessage) => {
-			// 可以忽略掃不到時的錯誤
-		}
-	).catch(err => {
-			console.error("無法啟動相機", err);
+	    },
+	    (errorMessage) => {}
+	).then(() => {
+	    // 掃描器啟動後，設定圓角
+	    $('#' + readerID + ' canvas').css({
+	        'border-radius': '20px',
+	        'border': '2px solid #4a90e2'
+	    });
+	}).catch(err => {
+	    console.error("無法啟動相機", err);
 	});
+
 }
 
 
@@ -294,6 +300,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
