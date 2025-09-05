@@ -186,7 +186,7 @@ KeyQRCode.prototype.Init = function(){
 	// 有給LabelText值就創建 p 標籤
 	if (this.LabelText){
 		//
-		const label = $('<p></p>').text(this.LabelText);
+		const label = $('<p></p>').text(this.LabelText+'ffffffffffQGQGQGQG');
 		container.append(label);
 	}
 
@@ -331,6 +331,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
