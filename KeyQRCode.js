@@ -12,6 +12,20 @@ $(document).ready(function () {
 
 
 
+$(document).ready(function () {    
+    $(".KeyQRCode").each(function(){ 
+  
+            var ID = $(this).attr("ID");
+            window[ID] = new KeyQRCode(ID,$(this));               
+            window[ID].Init();
+            // window[ID].LoadData();
+            // window[ID].RefreshData();         
+              
+    });     
+});
+
+
+
 
 const KeyQRCode = function(ID, Element){
     this.ID = ID;
@@ -110,7 +124,11 @@ KeyQRCode.prototype.Init = function(){
 		'margin-left':'0'
 	})
 
-	close.on('click', this.StopScan());
+	close.on('click', ()=>{
+		 if (!this.html5QrCode){
+		 	this.StopScan();
+		 }
+	});
 
 
 	const readerID = this.ID+'_reader';// 用物件ID+_reader組成掃碼區塊id
@@ -226,13 +244,18 @@ KeyQRCode.prototype.getIconCss = function(){
 
 
 KeyQRCode.prototype.StartScan = function(){
+
+    if (!this.html5QrCode) {
+        console.error("html5QrCode 尚未初始化，無法開始掃描");
+        return;
+    }
+
 	this.html5QrCode.start(
 		{ facingMode: "environment" },
 		{ fps: 10, qrbox: 250},
 		(decodedText) => {
 			this.currentQRCodeText = decodedText;
 			this.StopScan();// 自動停止
-
 
 			if (this.scanResultTarget && window[this.scanResultTarget]){
 				try{
@@ -262,13 +285,25 @@ KeyQRCode.prototype.StartScan = function(){
 	});
 }
 
-
+}
 KeyQRCode.prototype.StopScan = function(){
-	this.html5QrCode.stop().then(() => {
-		console.log("已停止掃描");
-	}).catch(err => {
-		console.error("停止掃描失敗", err);
-	});
+
+    if (this.html5QrCode) {
+        this.html5QrCode.stop().then(() => {
+            console.log("已停止掃描");
+        }).catch(err => {
+            console.error("停止掃描失敗", err);
+        });
+    } else {
+        console.warn("html5QrCode 尚未初始化，無法停止掃描");
+    }
+
+	
+	// this.html5QrCode.stop().then(() => {
+	// 	console.log("已停止掃描");
+	// }).catch(err => {
+	// 	console.error("停止掃描失敗", err);
+	// });
 }
 
 
@@ -277,4 +312,3 @@ KeyQRCode.prototype.StopScan = function(){
 
 function testf(){
 	alert('測試OnChangeFunc');
-}
