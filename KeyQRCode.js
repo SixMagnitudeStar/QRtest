@@ -124,7 +124,7 @@ KeyQRCode.prototype.Init = function(){
 	testdiv.css({
 		'height':'50px',
 		'width': '50px',
-		'background-color': 'red'
+		'background-color': 'blue'
 	})
 
 	reader.append(testdiv);
