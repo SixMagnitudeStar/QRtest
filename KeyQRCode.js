@@ -120,11 +120,6 @@ KeyQRCode.prototype.Init = function(){
 
 	reader.attr('ID', readerID);
 
-	reader.append(close);
-
-
-
-
 
 	const overlay = $('<div></div>');
 	overlay.css({
@@ -138,7 +133,6 @@ KeyQRCode.prototype.Init = function(){
 	    'border-radius': '20px',
 	    'pointer-events': 'none' // 讓掃描不被阻擋
 	});
-	$('#' + readerID).append(overlay);
 	
 
 	// QRCode掃描按鈕
@@ -179,6 +173,8 @@ KeyQRCode.prototype.Init = function(){
 	// 創建容器區塊，批次將所有生成的物件加入DOM
 	const container = $('<div></div>');
 
+	
+
 	// 有給LabelText值就創建 p 標籤
 	if (this.LabelText){
 		//
@@ -189,7 +185,9 @@ KeyQRCode.prototype.Init = function(){
 
 
 	container.append(Icondiv, reader);
-
+	container.append(overlay);
+	container.append(close);
+	
 	// 將物件相關HTML元素加入DOM
 	this.Element.append(container);
 
@@ -325,6 +323,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
