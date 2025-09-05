@@ -96,7 +96,7 @@ KeyQRCode.prototype.Init = function(){
 		'z-index': '1000'
 	})
 
-	let close = $('<img src="images/close.png  alt="結束掃描">');
+	let close = $('<img src="images/close.png" alt="結束掃描">');
 
 	close.css({
 		'width': '30px',
@@ -104,7 +104,8 @@ KeyQRCode.prototype.Init = function(){
 		'position': 'absolute',
 		'margin-top': '0',
 		'margin-left':'0',
-		'z-index': '1001'
+		'z-index': '1001px'
+  		'background-color': 'red'  // 先加背景確認位置
 	})
 
 	close.on('click', ()=>{
@@ -112,6 +113,22 @@ KeyQRCode.prototype.Init = function(){
 		 	this.StopScan();
 		 }
 	});
+
+
+
+	const overlay = $('<div></div>');
+	overlay.css({
+	    'position': 'absolute',
+	    'top': '50%',
+	    'left': '50%',
+	    'width': '450px',
+	    'height': '450px',
+	    'transform': 'translate(-50%, -50%)',
+	    'border': '2px solid #4a90e2',
+	    'border-radius': '20px',
+	    'pointer-events': 'none' // 讓掃描不被阻擋
+	});
+	$('#' + readerID).append(overlay);
 
 	reader.append(close);
 	
@@ -303,6 +320,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
