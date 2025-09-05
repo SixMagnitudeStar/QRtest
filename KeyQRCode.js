@@ -120,7 +120,15 @@ KeyQRCode.prototype.Init = function(){
 
 	reader.attr('ID', readerID);
 
+	const testdiv = $('<div></div>');
+	testdiv.css({
+		'height':'50px',
+		'width': '50px',
+		'background-color': 'red'
+	})
 
+	reader.append(testdiv);
+	
 	const overlay = $('<div></div>');
 	overlay.css({
 	    'position': 'absolute',
@@ -133,7 +141,7 @@ KeyQRCode.prototype.Init = function(){
 	    'border-radius': '20px',
 	    'pointer-events': 'none' // 讓掃描不被阻擋
 	});
-	
+
 
 	// QRCode掃描按鈕
 	const qrBtn = $('<button>QRCode888 scan</button>');
@@ -323,6 +331,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
