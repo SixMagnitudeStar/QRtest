@@ -111,7 +111,8 @@ KeyQRCode.prototype.Init = function(){
 		 }
 	});
 
-
+	reader.append(close);
+	
 	const readerID = this.ID+'_reader';// 用物件ID+_reader組成掃碼區塊id
 
 	reader.attr('ID', readerID);
@@ -300,6 +301,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
