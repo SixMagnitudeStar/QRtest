@@ -233,7 +233,7 @@ KeyQRCode.prototype.StartScan = function(){
 
 	this.html5QrCode.start(
 		{ facingMode: "environment" },
-		{ fps: 10, qrbox: 250},
+		{ fps: 10, qrbox: 350},
 		(decodedText) => {
 			this.currentQRCodeText = decodedText;
 			this.StopScan();// 自動停止
@@ -294,5 +294,6 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
