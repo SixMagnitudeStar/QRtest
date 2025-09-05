@@ -116,6 +116,13 @@ KeyQRCode.prototype.Init = function(){
 
 
 
+
+	reader.append(close);
+	
+	const readerID = this.ID+'_reader';// 用物件ID+_reader組成掃碼區塊id
+
+	reader.attr('ID', readerID);
+
 	const overlay = $('<div></div>');
 	overlay.css({
 	    'position': 'absolute',
@@ -129,13 +136,7 @@ KeyQRCode.prototype.Init = function(){
 	    'pointer-events': 'none' // 讓掃描不被阻擋
 	});
 	$('#' + readerID).append(overlay);
-
-	reader.append(close);
 	
-	const readerID = this.ID+'_reader';// 用物件ID+_reader組成掃碼區塊id
-
-	reader.attr('ID', readerID);
-
 	// QRCode掃描按鈕
 	const qrBtn = $('<button>QRCode888 scan</button>');
 
@@ -321,6 +322,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
