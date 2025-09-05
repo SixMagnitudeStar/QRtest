@@ -11,22 +11,6 @@ $(document).ready(function () {
 });
 
 
-
-$(document).ready(function () {    
-    $(".KeyQRCode").each(function(){ 
-  
-            var ID = $(this).attr("ID");
-            window[ID] = new KeyQRCode(ID,$(this));               
-            window[ID].Init();
-            // window[ID].LoadData();
-            // window[ID].RefreshData();         
-              
-    });     
-});
-
-
-
-
 const KeyQRCode = function(ID, Element){
     this.ID = ID;
     this.Element = Element;
@@ -312,3 +296,4 @@ KeyQRCode.prototype.StopScan = function(){
 
 function testf(){
 	alert('測試OnChangeFunc');
+
