@@ -11,6 +11,7 @@ $(document).ready(function () {
 });
 
 
+
 const KeyQRCode = function(ID, Element){
     this.ID = ID;
     this.Element = Element;
@@ -269,7 +270,7 @@ KeyQRCode.prototype.StartScan = function(){
 	});
 }
 
-}
+
 KeyQRCode.prototype.StopScan = function(){
 
     if (this.html5QrCode) {
@@ -282,7 +283,7 @@ KeyQRCode.prototype.StopScan = function(){
         console.warn("html5QrCode 尚未初始化，無法停止掃描");
     }
 
-	
+
 	// this.html5QrCode.stop().then(() => {
 	// 	console.log("已停止掃描");
 	// }).catch(err => {
@@ -296,4 +297,4 @@ KeyQRCode.prototype.StopScan = function(){
 
 function testf(){
 	alert('測試OnChangeFunc');
-
+}
