@@ -1,0 +1,421 @@
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code 掃描器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #1a1a2e;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #4cc9f0;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+        }
+        
+        .subtitle {
+            color: #a0a0b8;
+            font-size: 16px;
+        }
+        
+        .scanner-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin: 0 auto 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(76, 201, 240, 0.3);
+        }
+        
+        #reader {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #16213e;
+            border-radius: 20px;
+        }
+        
+        #reader__dashboard_section {
+            display: none;
+        }
+        
+        .scanner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            z-index: 1002;
+            transition: all 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: scale(1.1);
+        }
+        
+        .close-button::before, .close-button::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background: #fff;
+        }
+        
+        .close-button::before {
+            transform: rotate(45deg);
+        }
+        
+        .close-button::after {
+            transform: rotate(-45deg);
+        }
+        
+        .scan-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            height: 250px;
+            transform: translate(-50%, -50%);
+            border: 2px solid #4a90e2;
+            border-radius: 20px;
+            box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+        
+        .scan-line {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 2px;
+            background: #4a90e2;
+            box-shadow: 0 0 10px #4a90e2;
+            animation: scan 2s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { top: 10%; }
+            50% { top: 90%; }
+            100% { top: 10%; }
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 200px;
+            box-shadow: 0 4px 15px rgba(76, 201, 240, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(76, 201, 240, 0.5);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        #stopScan {
+            background: linear-gradient(135deg, #f72585, #b5179e);
+        }
+        
+        .result-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .result-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #4cc9f0;
+        }
+        
+        #result {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            min-height: 60px;
+            word-break: break-all;
+            text-align: left;
+        }
+        
+        .status {
+            margin-top: 15px;
+            color: #a0a0b8;
+            font-size: 14px;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            text-align: left;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #4cc9f0;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            color: #a0a0b8;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #a0a0b8;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>QR Code 掃描器</h1>
+            <p class="subtitle">將QR碼置於框內即可自動掃描</p>
+        </div>
+        
+        <div class="scanner-container">
+            <div id="reader"></div>
+            <div class="scanner-overlay">
+                <div class="close-button" id="closeButton"></div>
+                <div class="scan-frame">
+                    <div class="scan-line"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="startScan">開始掃描</button>
+            <button id="stopScan">停止掃描</button>
+        </div>
+        
+        <div class="result-container">
+            <div class="result-title">掃描結果</div>
+            <div id="result">尚未掃描</div>
+            <div class="status" id="status">就緒</div>
+        </div>
+        
+        <div class="instructions">
+            <h3>使用說明</h3>
+            <ul>
+                <li>點擊「開始掃描」按鈕啟動相機</li>
+                <li>將QR碼對準掃描框內</li>
+                <li>掃描成功後結果將顯示在上方</li>
+                <li>點擊左上角「X」按鈕或「停止掃描」可關閉相機</li>
+                <li>確保瀏覽器有相機使用權限</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 QR Code 掃描器 | 設計版本 v1.0</p>
+        </div>
+    </div>
+
+    <!-- 引入 Html5Qrcode -->
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    
+    <script>
+        // 模擬 KeyQRCode 功能
+        class KeyQRCode {
+            constructor() {
+                this.html5QrCode = null;
+                this.currentQRCodeText = "";
+                this.scanResultTarget = null;
+                this.Binding_Edit = null;
+                this.OnChangeFunc = null;
+                this.readerID = "reader";
+                this.isScanning = false;
+                
+                // 初始化
+                this.Init();
+                this.BindEvents();
+            }
+            
+            Init() {
+                try {
+                    this.html5QrCode = new Html5Qrcode(this.readerID);
+                    this.UpdateStatus("掃描器初始化成功");
+                } catch (error) {
+                    console.error("初始化失敗:", error);
+                    this.UpdateStatus("初始化失敗: " + error.message);
+                }
+            }
+            
+            BindEvents() {
+                const self = this;
+                
+                // 開始掃描按鈕
+                document.getElementById("startScan").addEventListener("click", function() {
+                    self.StartScan();
+                });
+                
+                // 停止掃描按鈕
+                document.getElementById("stopScan").addEventListener("click", function() {
+                    self.StopScan();
+                });
+                
+                // 關閉按鈕
+                document.getElementById("closeButton").addEventListener("click", function() {
+                    self.StopScan();
+                });
+            }
+            
+            StartScan() {
+                const self = this;
+                
+                if (this.isScanning) {
+                    this.UpdateStatus("掃描器已在運行中");
+                    return;
+                }
+
+                if (!this.html5QrCode) {
+                    this.UpdateStatus("html5QrCode 尚未初始化，無法開始掃描");
+                    return;
+                }
+
+                this.UpdateStatus("正在啟動相機...");
+                
+                this.html5QrCode.start(
+                    { facingMode: "environment" },
+                    { fps: 10, qrbox: 250 },
+                    (decodedText) => {
+                        this.currentQRCodeText = decodedText;
+                        this.UpdateResult(decodedText);
+                        
+                        // 自動停止
+                        this.StopScan();
+                        
+                        // 執行掃完條碼後希望執行的事件
+                        if (this.OnChangeFunc && typeof window[this.OnChangeFunc] === "function") {
+                            window[this.OnChangeFunc]();
+                        }
+                    },
+                    (errorMessage) => {
+                        // 忽略部分錯誤，不顯示在控制台
+                    }
+                ).then(() => {
+                    this.isScanning = true;
+                    this.UpdateStatus("掃描中...");
+                    
+                    // 確保 video 已生成，這時可以設置樣式
+                    setTimeout(() => {
+                        const videoElement = document.querySelector(`#${this.readerID} video`);
+                        if (videoElement) {
+                            videoElement.style.borderRadius = '20px';
+                        }
+                    }, 300);
+                    
+                }).catch(err => {
+                    console.error("無法啟動相機", err);
+                    this.UpdateStatus("無法啟動相機: " + err.message);
+                });
+            }
+            
+            StopScan() {
+                if (!this.html5QrCode || !this.isScanning) return;
+                
+                this.html5QrCode.stop().then(() => {
+                    this.isScanning = false;
+                    this.UpdateStatus("已停止掃描");
+                }).catch(err => {
+                    console.error("無法停止掃描", err);
+                    this.UpdateStatus("停止掃描時發生錯誤");
+                });
+            }
+            
+            UpdateResult(text) {
+                const resultElement = document.getElementById("result");
+                resultElement.textContent = text;
+                resultElement.style.color = "#4ade80";
+            }
+            
+            UpdateStatus(message) {
+                const statusElement = document.getElementById("status");
+                statusElement.textContent = message;
+            }
+        }
+
+        // 頁面載入後初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            window.keyQRCode = new KeyQRCode();
+            
+            // 模擬綁定事件
+            window.keyQRCode.OnChangeFunc = "onScanSuccess";
+            
+            // 定義掃描成功後的回調
+            window.onScanSuccess = function() {
+                console.log("掃描成功，執行自定義函數");
+            };
+        });
+    </script>
+</body>
+</html>
