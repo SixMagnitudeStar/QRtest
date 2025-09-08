@@ -300,6 +300,7 @@ KeyQRCode.prototype.StartScan = function(){
             'border': '2px solid #4a90e2',
             'border-radius': '20px',
             'z-index': '1001',
+			'background-color': 'yellow',
             'pointer-events': 'none'
         });
         $('#' + readerID).append(overlay);
@@ -338,6 +339,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
