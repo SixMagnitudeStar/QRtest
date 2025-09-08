@@ -298,8 +298,7 @@ KeyQRCode.prototype.StartScan = function(){
         const overlay = $('<div></div>');
         overlay.css({
             'position': 'absolute',
-            'top': '50%',
-            'left': '50%',
+            'top': '30px',
             'width': '150px',
             'height': '150px',
             'transform': 'translate(-50%, -50%)',
@@ -309,7 +308,7 @@ KeyQRCode.prototype.StartScan = function(){
 			'background-color': 'yellow',
             'pointer-events': 'none'
         });
-        self.reader.append(overlay);
+        self.Element.append(overlay);
 		
 	}).catch(err => {
 	    console.error("無法啟動相機", err);
@@ -345,6 +344,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
