@@ -95,7 +95,7 @@ KeyQRCode.prototype.Init = function(){
 		//
 		'width': '80%',
 		'height': '100%',
-		'position': 'absolute',
+		'position': 'relative',
 		'background-color':'green'
 
 		// 'transform': 'translate(-50%, -50%)'		
@@ -129,12 +129,10 @@ KeyQRCode.prototype.Init = function(){
 		'height':'50px',
 		'width': '50px',
 		'background-color': 'blue',
-		'z-index':'1000'
+		'z-index':'1000',
+		'position':'absolute'
+		
 	})
-
-	reader.append(testdiv);
-	
-
 
 
 	// QRCode掃描按鈕
@@ -171,7 +169,8 @@ KeyQRCode.prototype.Init = function(){
 	readerWrapper.css({
 		'width' : '100%',
 		'height': '80%',
-		'background-color': 'red'
+		'background-color': 'red',
+		'position': 'relative'
 	})
 	
 
@@ -192,7 +191,7 @@ KeyQRCode.prototype.Init = function(){
 	}
 
 
-	readerWrapper.append(reader);
+	readerWrapper.append(reader,testdiv);
 	container.append(Icondiv, readerWrapper);
 	container.append(close);
 	
@@ -350,6 +349,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
