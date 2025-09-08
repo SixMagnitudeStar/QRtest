@@ -64,6 +64,8 @@ const KeyQRCode = function(ID, Element){
     if (this.Element.attr('Mode') == 'embedding'){
     	this.Mode = 'embedding';
     }
+
+	this.reader = null;
 }
 
 
@@ -87,6 +89,7 @@ KeyQRCode.prototype.Init = function(){
 	// QRCode掃碼的區塊
 	const reader = $('<div></div');
 
+	this.reader = reader;
 
 	reader.css({
 		//
@@ -118,6 +121,7 @@ KeyQRCode.prototype.Init = function(){
 
 
 	const readerID = this.ID+'_reader';// 用物件ID+_reader組成掃碼區塊id
+
 
 	reader.attr('ID', readerID);
 
@@ -246,6 +250,8 @@ KeyQRCode.prototype.getIconCss = function(){
 
 KeyQRCode.prototype.StartScan = function(){
 
+	const self = this;
+
     if (!this.html5QrCode) {
         console.error("html5QrCode 尚未初始化，無法開始掃描");
         return;
@@ -303,7 +309,7 @@ KeyQRCode.prototype.StartScan = function(){
 			'background-color': 'yellow',
             'pointer-events': 'none'
         });
-        $('#' + readerID).append(overlay);
+        self.reader.append(overlay);
 		
 	}).catch(err => {
 	    console.error("無法啟動相機", err);
@@ -339,6 +345,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
