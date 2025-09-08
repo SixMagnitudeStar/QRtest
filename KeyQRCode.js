@@ -96,7 +96,6 @@ KeyQRCode.prototype.Init = function(){
 		'width': '80%',
 		'height': '100%',
 		'position': 'absolute',
-		'z-index': '800',
 		'background-color':'green'
 
 		// 'transform': 'translate(-50%, -50%)'		
@@ -351,6 +350,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
