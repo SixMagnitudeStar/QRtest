@@ -131,18 +131,7 @@ KeyQRCode.prototype.Init = function(){
 
 	reader.append(testdiv);
 	
-	const overlay = $('<div></div>');
-	overlay.css({
-	    'position': 'absolute',
-	    'top': '50%',
-	    'left': '50%',
-	    'width': '450px',
-	    'height': '450px',
-	    'transform': 'translate(-50%, -50%)',
-	    'border': '2px solid #4a90e2',
-	    'border-radius': '20px',
-	    'pointer-events': 'none' // 讓掃描不被阻擋
-	});
+
 
 
 	// QRCode掃描按鈕
@@ -195,7 +184,6 @@ KeyQRCode.prototype.Init = function(){
 
 
 	container.append(Icondiv, reader);
-	container.append(overlay);
 	container.append(close);
 	
 	// 將物件相關HTML元素加入DOM
@@ -299,6 +287,23 @@ KeyQRCode.prototype.StartScan = function(){
 	        'border-radius': '20px',
 	        'border': '2px solid #4a90e2'
 	    });
+
+        // 確保 video 已生成，這時 append overlay
+        const overlay = $('<div></div>');
+        overlay.css({
+            'position': 'absolute',
+            'top': '50%',
+            'left': '50%',
+            'width': '150px',
+            'height': '150px',
+            'transform': 'translate(-50%, -50%)',
+            'border': '2px solid #4a90e2',
+            'border-radius': '20px',
+            'z-index': '1001',
+            'pointer-events': 'none'
+        });
+        $('#' + readerID).append(overlay);
+		
 	}).catch(err => {
 	    console.error("無法啟動相機", err);
 	});
@@ -333,6 +338,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
