@@ -92,47 +92,42 @@ KeyQRCode.prototype.Init = function(){
 	this.reader = reader;
 
 	reader.css({
-		//
-		'width': '80%',
+		'width': '100%',
 		'height': '100%',
 		'position': 'relative',
-		'background-color':'green'
+		'background': '#16213e',
+		'border-radius': '20px'
+	
+		// 'width': '80%',
+		// 'height': '100%',
+		// 'position': 'relative',
+		// 'background-color':'green'
 
 		// 'transform': 'translate(-50%, -50%)'		
 	})
 
-	let close = $('<img src="images/close.png" alt="結束掃描">');
+	// let close = $('<img src="images/close.png" alt="結束掃描">');
 
-	close.css({
-		'width': '30px',
-		'height': '30px',
-		'position': 'absolute',
-		'margin-top': '0',
-		'margin-left':'0',
-		'z-index': '1001'
-	})
+	// close.css({
+	// 	'width': '30px',
+	// 	'height': '30px',
+	// 	'position': 'absolute',
+	// 	'margin-top': '0',
+	// 	'margin-left':'0',
+	// 	'z-index': '1001'
+	// })
 
-	close.on('click', ()=>{
-		 if (!this.html5QrCode){
-		 	this.StopScan();
-		 }
-	});
+	// close.on('click', ()=>{
+	// 	 if (!this.html5QrCode){
+	// 	 	this.StopScan();
+	// 	 }
+	// });
 
 
 	const readerID = this.ID+'_reader';// 用物件ID+_reader組成掃碼區塊id
 
 
 	reader.attr('ID', readerID);
-
-	const testdiv = $('<div></div>');
-	testdiv.css({
-		'height':'50px',
-		'width': '50px',
-		'background-color': 'blue',
-		'z-index':'1000',
-		'position':'absolute'
-		
-	})
 
 
 	// QRCode掃描按鈕
@@ -181,19 +176,39 @@ KeyQRCode.prototype.Init = function(){
 	// 創建容器區塊，批次將所有生成的物件加入DOM
 	const container = $('<div></div>');
 
-	
+	contaniner.css({
+		'position': 'absolute',
+		'width': '100vw',
+		'hegiht': '70vh' 
+	})
+
+
+	const overlay = $('<div class="scanner-overlay"></div>');
+	// overlay.css({
+	// 	'position': 'absolute',
+ //        'top': '0',
+ //        'left': '0',
+ //        'width': '100%',
+ //        'height': '100%',
+ //        'pointer-events': 'none',
+ //        'z-index': '1000'
+	// })
+	const closebtn = $('<div class="lose-button"></div>');
+
+	const scanframe = $('<div class="can-frame"></div>');
 
 	// 有給LabelText值就創建 p 標籤
 	if (this.LabelText){
 		//
-		const label = $('<p></p>').text(this.LabelText+'ffffffffffQGQGQGQG');
+		const label = $('<p></p>').text(this.LabelText);
 		container.append(label);
 	}
 
-
-	readerWrapper.append(reader,testdiv);
-	container.append(Icondiv, readerWrapper);
-	container.append(close);
+	overlay.append(closebtn, scanframe);
+	
+	// readerWrapper.append(reader,testdiv);
+	container.append(Icondiv, reader, overlay);
+	//container.append(close);
 	
 	// 將物件相關HTML元素加入DOM
 	this.Element.append(container);
@@ -349,6 +364,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
