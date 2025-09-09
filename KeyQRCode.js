@@ -161,7 +161,7 @@ KeyQRCode.prototype.Init = function(){
 	const container = $('<div></div>');
 
 	container.css({
-		'position': 'absolute',
+		'position': 'relative',
 		'width': '100vw',
 		'hegiht': '70vh' 
 	})
@@ -357,6 +357,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
