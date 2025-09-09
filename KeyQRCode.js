@@ -97,7 +97,8 @@ KeyQRCode.prototype.Init = function(){
 		'height': '100%',
 		'position': 'absolute',
 		'background': '#16213e',
-		'border-radius': '20px'
+		'border-radius': '20px',
+		'top': '0'
 	
 		// 'width': '80%',
 		// 'height': '100%',
@@ -179,12 +180,9 @@ KeyQRCode.prototype.Init = function(){
 	const closebtn = $('<div class="close-button"></div>');
 
 
-	closebtn.on('click', function (){
-		if (overlay.is(":visible")){
-			overlay.hide();
-		}else{
-			overlay.show();
-		}
+	closebtn.on('click', ()=>{
+		this.StopScan();
+		
 	})
 
 	// const scanframe = $('<div class="scan-frame"></div>');
@@ -359,6 +357,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
