@@ -66,6 +66,7 @@ const KeyQRCode = function(ID, Element){
     }
 
 	this.reader = null;
+	this.overlay =  null;
 }
 
 
@@ -205,6 +206,7 @@ KeyQRCode.prototype.Init = function(){
 	}
 
 	overlay.append(closebtn, scanframe);
+	this.overlay = overlay;
 	
 	// readerWrapper.append(reader,testdiv);
 	container.append(Icondiv, reader, overlay);
@@ -214,7 +216,8 @@ KeyQRCode.prototype.Init = function(){
 	this.Element.append(container);
 
 
-
+	overlay.hide();
+	
 	// 創建QRCode掃碼物件
 	const html5QrCode = new Html5Qrcode(readerID);
 	
@@ -308,6 +311,7 @@ KeyQRCode.prototype.StartScan = function(){
 	    },
 	    (errorMessage) => {}
 	).then(() => {
+		self.overlay.show();
 	    // 掃描器啟動後，設定圓角
 	    $('#' + readerID + ' canvas').css({
 	        'border-radius': '20px',
@@ -338,7 +342,7 @@ KeyQRCode.prototype.StartScan = function(){
 
 
 KeyQRCode.prototype.StopScan = function(){
-
+	this.overlay.hide;
     if (this.html5QrCode) {
         this.html5QrCode.stop().then(() => {
             console.log("已停止掃描");
@@ -364,6 +368,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
