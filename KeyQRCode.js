@@ -93,8 +93,8 @@ KeyQRCode.prototype.Init = function(){
 	this.reader = reader;
 
 	reader.css({
-		'width': '100%',
-		'height': '100%',
+		'width': '100vw',
+		'height': '60vh',
 		'position': 'absolute',
 		// 'background': '#16213e',
 		'border-radius': '20px',
@@ -360,6 +360,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
