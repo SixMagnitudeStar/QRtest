@@ -133,7 +133,7 @@ KeyQRCode.prototype.Init = function(){
 	// QRCode掃描按鈕
 	const qrBtn = $('<button>QRCode888 scan</button>');
 
-	const qrIcon = $('<img src="images/scan.png" alt="請掃描QRCode"/>');
+	const qrIcon = $('<img src="scan.png" alt="請掃描QRCode"/>');
 	this.qrIcon = qrIcon
 
 	const Icondiv = $('<div></div>');
@@ -193,9 +193,9 @@ KeyQRCode.prototype.Init = function(){
  //        'pointer-events': 'none',
  //        'z-index': '1000'
 	// })
-	const closebtn = $('<div class="lose-button"></div>');
+	const closebtn = $('<div class="close-button"></div>');
 
-	const scanframe = $('<div class="can-frame"></div>');
+	const scanframe = $('<div class="scan-frame"></div>');
 
 	// 有給LabelText值就創建 p 標籤
 	if (this.LabelText){
@@ -364,6 +364,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
