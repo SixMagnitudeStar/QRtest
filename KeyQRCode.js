@@ -247,16 +247,11 @@ KeyQRCode.prototype.getIconCss = function(){
 			'height' : '40px',
 			'width'  : '40px',
 			'display': 'block',
-			//'background-color': 'transparent',
 			 'background-color': 'white',
 			'margin': '0'
 		});
 
 	}
-
-
-
-
 }
 
 
@@ -305,26 +300,26 @@ KeyQRCode.prototype.StartScan = function(){
 	).then(() => {
 		self.container.show();
 	    // 掃描器啟動後，設定圓角
-	    $('#' + readerID + ' canvas').css({
-	        'border-radius': '20px',
-	        'border': '2px solid #4a90e2'
-	    });
+	    // $('#' + readerID + ' canvas').css({
+	    //     'border-radius': '20px',
+	    //     'border': '2px solid #4a90e2'
+	    // });
 
         // 確保 video 已生成，這時 append overlay
-        const overlay = $('<div></div>');
-        overlay.css({
-            'position': 'absolute',
-            'top': '30px',
-            'width': '150px',
-            'height': '150px',
-            'transform': 'translate(-50%, -50%)',
-            'border': '2px solid #4a90e2',
-            'border-radius': '20px',
-            'z-index': '1001',
-			'background-color': 'yellow',
-            'pointer-events': 'none'
-        });
-        self.Element.append(overlay);
+   //      const overlay = $('<div></div>');
+   //      overlay.css({
+   //          'position': 'absolute',
+   //          'top': '30px',
+   //          'width': '150px',
+   //          'height': '150px',
+   //          'transform': 'translate(-50%, -50%)',
+   //          'border': '2px solid #4a90e2',
+   //          'border-radius': '20px',
+   //          'z-index': '1001',
+			// 'background-color': 'yellow',
+   //          'pointer-events': 'none'
+   //      });
+   //      self.Element.append(overlay);
 		
 	}).catch(err => {
 	    console.error("無法啟動相機", err);
@@ -360,6 +355,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
