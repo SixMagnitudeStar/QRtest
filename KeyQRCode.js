@@ -176,7 +176,7 @@ KeyQRCode.prototype.Init = function(){
 	// 創建容器區塊，批次將所有生成的物件加入DOM
 	const container = $('<div></div>');
 
-	contaniner.css({
+	container.css({
 		'position': 'absolute',
 		'width': '100vw',
 		'hegiht': '70vh' 
@@ -364,6 +364,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
