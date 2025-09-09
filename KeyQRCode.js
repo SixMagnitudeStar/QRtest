@@ -180,7 +180,7 @@ KeyQRCode.prototype.Init = function(){
 
 
 	closebtn.on('click', function (){
-		if overlay.is(":visible"){
+		if (overlay.is(":visible")){
 			overlay.hide();
 		}else{
 			overlay.show();
@@ -359,6 +359,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
