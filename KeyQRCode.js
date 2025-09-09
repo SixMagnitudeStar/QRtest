@@ -95,7 +95,7 @@ KeyQRCode.prototype.Init = function(){
 	reader.css({
 		'width': '100%',
 		'height': '100%',
-		'position': 'relative',
+		'position': 'absolute',
 		'background': '#16213e',
 		'border-radius': '20px'
 	
@@ -106,24 +106,6 @@ KeyQRCode.prototype.Init = function(){
 
 		// 'transform': 'translate(-50%, -50%)'		
 	})
-
-	// let close = $('<img src="images/close.png" alt="結束掃描">');
-
-	// close.css({
-	// 	'width': '30px',
-	// 	'height': '30px',
-	// 	'position': 'absolute',
-	// 	'margin-top': '0',
-	// 	'margin-left':'0',
-	// 	'z-index': '1001'
-	// })
-
-	// close.on('click', ()=>{
-	// 	 if (!this.html5QrCode){
-	// 	 	this.StopScan();
-	// 	 }
-	// });
-
 
 	const readerID = this.ID+'_reader';// 用物件ID+_reader組成掃碼區塊id
 
@@ -377,6 +359,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
