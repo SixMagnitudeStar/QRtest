@@ -196,7 +196,16 @@ KeyQRCode.prototype.Init = function(){
 	// })
 	const closebtn = $('<div class="close-button"></div>');
 
-	const scanframe = $('<div class="scan-frame"></div>');
+
+	closebtn.on('click', function (){
+		if overlay.is(":visible"){
+			overlay.hide();
+		}else{
+			overlay.show();
+		}
+	})
+
+	// const scanframe = $('<div class="scan-frame"></div>');
 
 	// 有給LabelText值就創建 p 標籤
 	if (this.LabelText){
@@ -205,7 +214,7 @@ KeyQRCode.prototype.Init = function(){
 		container.append(label);
 	}
 
-	overlay.append(closebtn, scanframe);
+	overlay.append(closebtn);
 	this.overlay = overlay;
 	
 	// readerWrapper.append(reader,testdiv);
@@ -368,6 +377,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
