@@ -179,6 +179,16 @@ KeyQRCode.prototype.Init = function(){
 		'width': '35px'
 	})
 
+	const closebtnDiv = $('<div ></div>');
+
+	closebtnDiv.css({
+		'position': 'relative',
+		'top': '20px',
+		'left': '20px',
+		'background': 'rgba(0, 0, 0, 0.5)',
+		'border-radius': '50%'
+	})
+
 	closebtn.on('click', ()=>{
 		this.StopScan();
 		
@@ -193,7 +203,8 @@ KeyQRCode.prototype.Init = function(){
 		scannerContainer.append(label);
 	}
 
-	overlay.append(closebtn);
+	closebtnDiv.append(closebtn);
+	overlay.append(closebtnDiv);
 	this.overlay = overlay;
 	
 	scannerContainer.append(reader, overlay);
@@ -323,6 +334,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
