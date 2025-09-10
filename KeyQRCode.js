@@ -217,13 +217,13 @@ KeyQRCode.prototype.Init = function(){
 	this.Element.append(Icondiv,scannerContainer);
 
 	overlay.hide();
-	closebtnDiv.hide();
+	
 	// 創建QRCode掃碼物件
 	const html5QrCode = new Html5Qrcode(readerID);
 	
 	// 將QRCode掃碼物件存取進KeyQRCode屬性內，方便在Method中呼叫
 	this.html5QrCode = html5QrCode;
-
+	alert('測試ww');
 }
 
 
@@ -310,7 +310,6 @@ KeyQRCode.prototype.StartScan = function(){
 	    (errorMessage) => {}
 	).then(() => {
 		self.overlay.show();
-		self.closebtn.show();
 	}).catch(err => {
 	    console.error("無法啟動相機", err);
 	});
@@ -320,7 +319,6 @@ KeyQRCode.prototype.StartScan = function(){
 
 KeyQRCode.prototype.StopScan = function(){
 	this.overlay.hide();
-	this.closebtnDiv.hide();
     if (this.html5QrCode) {
         this.html5QrCode.stop().then(() => {
             console.log("已停止掃描");
@@ -340,6 +338,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
