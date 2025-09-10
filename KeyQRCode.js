@@ -172,8 +172,12 @@ KeyQRCode.prototype.Init = function(){
 
 	const overlay = $('<div class="scanner-overlay"></div>');
 
-	const closebtn = $('<div class="close-button"></div>');
-
+	//const closebtn = $('<div class="close-button"></div>');
+	const closebtn = $('<img src="close.png" alt="叉叉">');
+	clolsebtn.css({
+		'height': '35px',
+		'width': '35px'
+	})
 
 	closebtn.on('click', ()=>{
 		this.StopScan();
@@ -319,6 +323,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
