@@ -207,7 +207,7 @@ KeyQRCode.prototype.Init = function(){
 		scannerContainer.append(label);
 	}
 
-	closebtnDiv.append(closebtn);
+	// closebtnDiv.append(closebtn);
     overlay.append(closebtnDiv);
 	this.overlay = overlay;
 	
@@ -223,7 +223,7 @@ KeyQRCode.prototype.Init = function(){
 	
 	// 將QRCode掃碼物件存取進KeyQRCode屬性內，方便在Method中呼叫
 	this.html5QrCode = html5QrCode;
-	alert('測試ww');
+	alert('測試oo');
 }
 
 
@@ -338,6 +338,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
