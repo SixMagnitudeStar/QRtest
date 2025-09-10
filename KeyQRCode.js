@@ -97,7 +97,7 @@ KeyQRCode.prototype.Init = function(){
 	reader.css({
 		'width': '100vw',
 		'height': '100%',
-		'position': 'absolute',
+		'position': 'relative',
 		// 'background': '#16213e',
 		'border-radius': '20px',
 		'top': '0'
@@ -208,10 +208,10 @@ KeyQRCode.prototype.Init = function(){
 	}
 
 	closebtnDiv.append(closebtn);
-	// overlay.append(closebtnDiv);
+    overlay.append(closebtnDiv);
 	this.overlay = overlay;
 	
-	scannerContainer.append(reader,closebtnDiv , overlay);
+	scannerContainer.append(reader, overlay);
 	
 	// 將物件相關HTML元素加入DOM
 	this.Element.append(Icondiv,scannerContainer);
@@ -340,6 +340,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
