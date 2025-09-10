@@ -67,6 +67,7 @@ const KeyQRCode = function(ID, Element){
 
 	this.reader = null;
 	this.overlay =  null;
+	this.scannerContainer = null;
 }
 
 
@@ -158,9 +159,11 @@ KeyQRCode.prototype.Init = function(){
 	qrIcon.on('click', () => this.StartScan());
 
 	// 創建容器區塊，批次將所有生成的物件加入DOM
-	const container = $('<div></div>');
-
-	container.css({
+	const scannerContainer = $('<div></div>');
+	
+	this.scannerContainer = scannerContainer;
+	
+	scannerContainer.css({
 		'position': 'relative',
 		'width': '100vw',
 		'hegiht': '70vh' 
@@ -168,15 +171,7 @@ KeyQRCode.prototype.Init = function(){
 
 
 	const overlay = $('<div class="scanner-overlay"></div>');
-	// overlay.css({
-	// 	'position': 'absolute',
- //        'top': '0',
- //        'left': '0',
- //        'width': '100%',
- //        'height': '100%',
- //        'pointer-events': 'none',
- //        'z-index': '1000'
-	// })
+
 	const closebtn = $('<div class="close-button"></div>');
 
 
@@ -191,21 +186,18 @@ KeyQRCode.prototype.Init = function(){
 	if (this.LabelText){
 		//
 		const label = $('<p></p>').text(this.LabelText);
-		container.append(label);
+		scannerContainer.append(label);
 	}
 
 	overlay.append(closebtn);
 	this.overlay = overlay;
 	
-	// readerWrapper.append(reader,testdiv);
-	container.append(reader, overlay);
-	//container.append(close);
+	scannerContainer.append(reader, overlay);
 	
 	// 將物件相關HTML元素加入DOM
 	this.Element.append(Icondiv,container);
 
-
-	container.hide();
+	scannerContainer.hide();
 	
 	// 創建QRCode掃碼物件
 	const html5QrCode = new Html5Qrcode(readerID);
@@ -298,29 +290,7 @@ KeyQRCode.prototype.StartScan = function(){
 	    },
 	    (errorMessage) => {}
 	).then(() => {
-		self.container.show();
-	    // 掃描器啟動後，設定圓角
-	    // $('#' + readerID + ' canvas').css({
-	    //     'border-radius': '20px',
-	    //     'border': '2px solid #4a90e2'
-	    // });
-
-        // 確保 video 已生成，這時 append overlay
-   //      const overlay = $('<div></div>');
-   //      overlay.css({
-   //          'position': 'absolute',
-   //          'top': '30px',
-   //          'width': '150px',
-   //          'height': '150px',
-   //          'transform': 'translate(-50%, -50%)',
-   //          'border': '2px solid #4a90e2',
-   //          'border-radius': '20px',
-   //          'z-index': '1001',
-			// 'background-color': 'yellow',
-   //          'pointer-events': 'none'
-   //      });
-   //      self.Element.append(overlay);
-		
+		self.scannerContainer.show();
 	}).catch(err => {
 	    console.error("無法啟動相機", err);
 	});
@@ -329,7 +299,7 @@ KeyQRCode.prototype.StartScan = function(){
 
 
 KeyQRCode.prototype.StopScan = function(){
-	this.container.hide;
+	this.scannerContainer.hide();
     if (this.html5QrCode) {
         this.html5QrCode.stop().then(() => {
             console.log("已停止掃描");
@@ -340,12 +310,6 @@ KeyQRCode.prototype.StopScan = function(){
         console.warn("html5QrCode 尚未初始化，無法停止掃描");
     }
 
-
-	// this.html5QrCode.stop().then(() => {
-	// 	console.log("已停止掃描");
-	// }).catch(err => {
-	// 	console.error("停止掃描失敗", err);
-	// });
 }
 
 
@@ -355,6 +319,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
