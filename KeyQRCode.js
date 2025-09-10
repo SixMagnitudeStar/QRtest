@@ -166,7 +166,8 @@ KeyQRCode.prototype.Init = function(){
 	scannerContainer.css({
 		'position': 'relative',
 		'width': '100vw',
-		'hegiht': '70vh' 
+		'hegiht': '70vh' ,
+		'display': 'flex'
 	})
 
 
@@ -179,16 +180,16 @@ KeyQRCode.prototype.Init = function(){
 		'width': '35px'
 	})
 
-	const closebtnDiv = $('<div ></div>');
+	const closebtnDiv = $('<div class="close-button" ></div>');
 
-	closebtnDiv.css({
-		'position': 'ab',
-		'top': '20px',
-		'left': '20px',
-		'background': 'rgba(0, 0, 0, 0.5)',
-		'border-radius': '50%',
-		'display': 'flex'
-	})
+	// closebtnDiv.css({
+	// 	'position': 'ab',
+	// 	'top': '20px',
+	// 	'left': '20px',
+	// 	'background': 'rgba(0, 0, 0, 0.5)',
+	// 	'border-radius': '50%',
+	// 	'display': 'flex'
+	// })
 
 	closebtn.on('click', ()=>{
 		this.StopScan();
@@ -335,6 +336,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
