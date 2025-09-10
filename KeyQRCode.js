@@ -182,11 +182,12 @@ KeyQRCode.prototype.Init = function(){
 	const closebtnDiv = $('<div ></div>');
 
 	closebtnDiv.css({
-		'position': 'relative',
+		'position': 'ab',
 		'top': '20px',
 		'left': '20px',
 		'background': 'rgba(0, 0, 0, 0.5)',
-		'border-radius': '50%'
+		'border-radius': '50%',
+		'display': 'flex'
 	})
 
 	closebtn.on('click', ()=>{
@@ -334,6 +335,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
