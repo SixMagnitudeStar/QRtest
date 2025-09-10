@@ -211,7 +211,7 @@ KeyQRCode.prototype.Init = function(){
 	// overlay.append(closebtnDiv);
 	this.overlay = overlay;
 	
-	scannerContainer.append(reader,clossebtnDiv , overlay);
+	scannerContainer.append(reader,closebtnDiv , overlay);
 	
 	// 將物件相關HTML元素加入DOM
 	this.Element.append(Icondiv,scannerContainer);
@@ -340,6 +340,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
