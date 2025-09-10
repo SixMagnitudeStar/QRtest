@@ -68,6 +68,7 @@ const KeyQRCode = function(ID, Element){
 	this.reader = null;
 	this.overlay =  null;
 	this.scannerContainer = null;
+	this.closebtn = null;
 }
 
 
@@ -181,6 +182,7 @@ KeyQRCode.prototype.Init = function(){
 	})
 
 	const closebtnDiv = $('<div class="close-button" ></div>');
+	this.closebtn = closebtnDiv;
 
 	// closebtnDiv.css({
 	// 	'position': 'ab',
@@ -206,16 +208,16 @@ KeyQRCode.prototype.Init = function(){
 	}
 
 	closebtnDiv.append(closebtn);
-	overlay.append(closebtnDiv);
+	// overlay.append(closebtnDiv);
 	this.overlay = overlay;
 	
-	scannerContainer.append(reader, overlay);
+	scannerContainer.append(reader,clossebtnDiv , overlay);
 	
 	// 將物件相關HTML元素加入DOM
 	this.Element.append(Icondiv,scannerContainer);
 
 	overlay.hide();
-	
+	closebtnDiv.hide();
 	// 創建QRCode掃碼物件
 	const html5QrCode = new Html5Qrcode(readerID);
 	
@@ -308,6 +310,7 @@ KeyQRCode.prototype.StartScan = function(){
 	    (errorMessage) => {}
 	).then(() => {
 		self.overlay.show();
+		self.closebtn.show();
 	}).catch(err => {
 	    console.error("無法啟動相機", err);
 	});
@@ -317,6 +320,7 @@ KeyQRCode.prototype.StartScan = function(){
 
 KeyQRCode.prototype.StopScan = function(){
 	this.overlay.hide();
+	this.closebtnDiv.hide();
     if (this.html5QrCode) {
         this.html5QrCode.stop().then(() => {
             console.log("已停止掃描");
@@ -336,6 +340,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
