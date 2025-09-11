@@ -167,8 +167,7 @@ KeyQRCode.prototype.Init = function(){
 	scannerContainer.css({
 		'position': 'relative',
 		'width': '100vw',
-		'hegiht': '70vh' ,
-		'display': 'flex'
+		'hegiht': '70vh' 
 	})
 
 
@@ -338,6 +337,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
