@@ -7,7 +7,7 @@
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 
-  <script src="KeyQRCode.js?v=1"></script>
+  <script src="KeyQRCode.js?v=2"></script>
 
     <style>        
 
@@ -25,8 +25,8 @@
             position: absolute;
             top: 50px;
             left: 20px;
-            width: 80px;
-            height: 80px;
+/*             width: 60px;
+            height: 60px; */
             background: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
             display: flex;
@@ -43,7 +43,7 @@
             transform: scale(1.1);
         }
         
-        .close-button::before, .close-button::after {
+/*         .close-button::before, .close-button::after {
             content: '';
             position: absolute;
             width: 20px;
@@ -57,7 +57,7 @@
         
         .close-button::after {
             transform: rotate(-45deg);
-        }
+        } */
         
         .scan-frame {
             position: absolute;
@@ -81,7 +81,7 @@
 </head>
 <body>
 
-	<p class='testp'>異動yu標題:X</p>
+	<p class='testp'>異動oo標題:X</p>
 
 	<div id='testqr' class='KeyQRCode' LabelText='QRCo555de測試' OnChangeFunc='testf'></div>
 
@@ -148,6 +148,7 @@ $(document).ready(function () {
 </body>
 
 </html>
+
 
 
 
