@@ -146,14 +146,7 @@ KeyQRCode.prototype.Init = function(){
 		'background-color': '#f0f8ff'
 	});
 
-	const readerWrapper = $('<div></div>');
-	readerWrapper.css({
-		'width' : '100%',
-		'height': '80%',
-		'background-color': 'red',
-		'position': 'relative'
-	})
-	
+
 
 	// 點擊觸發掃描事件
 //	qrBtn.on('click', () => this.StartScan());
@@ -207,7 +200,7 @@ KeyQRCode.prototype.Init = function(){
 		scannerContainer.append(label);
 	}
 
-	closebtnDiv.append(closebtn);
+//	closebtnDiv.append(closebtn);
     overlay.append(closebtnDiv);
 	this.overlay = overlay;
 	
@@ -338,6 +331,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
