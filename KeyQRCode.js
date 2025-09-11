@@ -166,16 +166,16 @@ KeyQRCode.prototype.Init = function(){
 
 	const overlay = $('<div class="scanner-overlay"></div>');
 
-	//const closebtn = $('<div class="close-button"></div>');
-	const closebtn = $('<img src="cancel.png" alt="叉叉"/>');
+	const closebtn = $('<div class="close-button"></div>');
+	//const closebtn = $('<img src="cancel.png" alt="叉叉"/>');
 	closebtn.css({
-		'height': '60px',
-		'width': '60px',
-		'z-index': '1100'
+		// 'height': '60px',
+		// 'width': '60px',
+		// 'z-index': '1100'
 	})
 
 	const closebtnDiv = $('<div class="close-button" ></div>');
-	this.closebtn = closebtnDiv;
+	this.closebtn = closebtn;
 
 	// closebtnDiv.css({
 	// 	'position': 'ab',
@@ -201,7 +201,7 @@ KeyQRCode.prototype.Init = function(){
 	}
 
 //	closebtnDiv.append(closebtn);
-    overlay.append(closebtnDiv);
+    overlay.append(closebtn);
 	this.overlay = overlay;
 	
 	scannerContainer.append(reader, overlay);
@@ -331,6 +331,7 @@ KeyQRCode.prototype.StopScan = function(){
 function testf(){
 	alert('測試OnChangeFunc');
 }
+
 
 
 
