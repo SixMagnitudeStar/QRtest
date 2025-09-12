@@ -1,13 +1,13 @@
 $(document).ready(function () {    
     $(".KeyFile").each(function(){ 
-    
+        if (KeyObjCheck($(this))) {
             var ID = $(this).attr("ID");
             window[ID] = new KeyFile(ID,$(this));               
-            window[ID].Init();    
-           //window[ID].RefreshData();        
-               
+            window[ID].Init();     
+        }                
     });     
 });
+
 
 //定義 KeyFileItem 
 const KeyFileItem= function() {
@@ -130,8 +130,8 @@ KeyFile.prototype._DefaultStyle = {
         LabelFontColor         : "  #000000" ,      //預設標題字體顏色    
 };
 
+
 KeyFile.prototype.Init = function(){
-    
     // 接收上傳檔案的input標籤
     let FileInput = null;
 
@@ -155,17 +155,7 @@ KeyFile.prototype.Init = function(){
         inputLabel.html(`選取檔案(最大上傳數：${this.MaxCount})`);
     }
 
-    const icon = $('<img class="cameraIcon" src="./camera.png" alt="上傳檔案"/>');
-
-    icon.on('click', function(event){
-        alert('點相機');
-        FileInput.attr('capture','environment');
-        FileInput.click();
-        event.stopPropagation();
-        
-
-        return;
-    })
+    const icon = $('<img class="cameraIcon" src="camera.png" alt="上傳檔案"/>');
 
 
     const inputWraper = $('<div></div>');
@@ -258,6 +248,21 @@ KeyFile.prototype.Init = function(){
     });
 
 
+    // 點擊相機icon開啟相機
+    icon.on('click', function(event){
+        alert('點相機');
+        if (!this.Enabled){
+            return;
+        alert('啟用設定');
+
+        FileInput.attr('capture','environment');
+        FileInput.click();
+        event.stopPropagation();
+
+        return;
+    })
+
+
     // 點擊上傳檔案的label , 觸發檔案上傳input物件的點擊事件, 展開選取檔案視窗
     inputLabel.on('click', ()=>{
         // 如果enabled = false, 直接離開不觸發input點擊事件上傳檔案
@@ -273,23 +278,17 @@ KeyFile.prototype.Init = function(){
         FileInput.click();
     })
 
+
     if (!this._Enabled){
-        inputLabel.hide();
+        inputWraper.hide();
     }
 
     //inputLabel.append(icon);
     inputWraper.append(inputLabel, icon);
     //  將所有生成的標籤加入Element中
     this.Element.append(label, inputWraper, FileInput, FileList);
-}
 
-
-KeyFile.prototype.LabelChange = function(){
-    if (this._FilesArray.length == 0){
-        this.Label.text(this.ID + ' ：目前暫無檔案');
-    }else{
-        this.Label.text(this.ID);
-    }
+    this.renderFileList();
 }
 
 
@@ -297,17 +296,18 @@ KeyFile.prototype.renderFileList= function(){;
 
     // 清空畫面上檔案列表UI
     this._FileList.empty();
-
-    this.LabelChange();
+    alert('進');
 
     // 如果沒有選擇的檔案，離開
-    if (!this._FilesArray || this._FilesArray.length === 0){
-        alert('近來');
-        let a = $('<a>目前暫無檔案</a>');
-        this._FileList.append(a);
-
+    if (!this._FilesArray || this._FilesArray.length === 0 ){
+        if (!this.Enabled){
+            let a = $('<div class="NFmsg"><a>目前暫無檔案</a></div>');
+            this._FileList.append(a);
+        }
+        
         return;
     } 
+    alert('非空');
         //
     for (let i=0; i<this._FilesArray.length; i++){
 
@@ -371,6 +371,7 @@ KeyFile.prototype._sendTobackend = async function(action, KeyNo){
         console.log('sendTobackend缺少單號參數');
         return;
     }
+
     // HTTP請求參數一律轉大寫
     action = action.toLowerCase().trim();  
 
@@ -391,7 +392,12 @@ KeyFile.prototype._sendTobackend = async function(action, KeyNo){
 
 
     try {
-        const response = await fetch(gWebConnect + 'Files/' + action + '/' + KeyNo + '/' + (this.FileNameChangeSeq ? '1' : '0'), {
+        // const response = await fetch(gWebConnect + 'Files/' + action + '/' + KeyNo + '/' + (this.FileNameChangeSeq ? '1' : '0'), {
+        //     method: 'POST',
+        //     body: formData
+        // });
+
+        const response = await fetch('http://localhost/testt/Service1.svc/' + 'Files/' + action + '/' + KeyNo + '/' + (this.FileNameChangeSeq ? '1' : '0'), {
             method: 'POST',
             body: formData
         });
@@ -430,7 +436,12 @@ KeyFile.prototype._sendTobackend = async function(action, KeyNo){
 }
 
 
-KeyFile.prototype.RefreshData = function(){   
+KeyFile.prototype.RefreshData = async function(){   
+
+    // if (!this.DataSet || !this.KeyField) return;
+
+    // let state = this.DataSet.State;
+
     const mimeTypes = {
         'txt': 'text/plain',
         'html': 'text/html',
@@ -448,22 +459,26 @@ KeyFile.prototype.RefreshData = function(){
     };
 
     this.Clear();
-    this.KeyNo = 'AA1';
 
-    fetch(gFilesChangeUrl + this.KeyNo, { method: 'GET' })
+  //  this.KeyNo = this.DataSet.FieldByName(this.KeyField).Value;  
+    this.KeyNo = 'AA1111';
+
+    if (this.KeyNo == '') return;
+
+    await fetch(gWebConnect + 'Files/' + this.KeyNo, { method: 'GET' })
     .then(response => {
         if (!response.ok) {
-            throw new Error("伺服器回應錯誤，狀態碼：" + response.status);
+    
+             throw new Error("伺服器回應錯誤，狀態碼：" + response.status);
         }
 
         const contentType = response.headers.get("Content-Type") || "";
-
         if (contentType.includes("application/zip")) {
             return response.blob().then(blob => ({ type: "zip", data: blob }));
         } else if (contentType.includes("application/json")) {
             return response.json().then(json => {
                 const msg = json.error || json.message || "伺服器回應格式錯誤";
-                console.log("伺服器訊息:", msg);
+                console.log("伺服器訊息:", msg+'(查無檔案)');
                 // 回傳一個標記，讓後面知道不用處理 ZIP
                 return { type: "json", data: msg };
             });
@@ -510,25 +525,24 @@ KeyFile.prototype.RefreshData = function(){
         if (this._FilesArray.length > 0) {
             console.log("所有檔案已處理完畢");
         }
-        this.renderFileList();
+      //  this.DataSet.State = state;
           
     })
     .catch(error => {
-        console.error("處理檔案時發生錯誤:", error);
-        alert(error.message);
+        console.error("處理 ZIP 檔案時發生錯誤:", error);
     });
+
+    this.renderFileList();
+
 }
 
-function test(){
-
-}
 
 KeyFile.prototype.Clear = function(){
     this.Files       = [];
-    this._FilesArray.length = 0;
-    //this._FilesArray = [];
+    this._FilesArray = [];
     this._FileList.empty();
 }
+
 
 
 
