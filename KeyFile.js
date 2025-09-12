@@ -1,10 +1,8 @@
 $(document).ready(function () {    
     $(".KeyFile").each(function(){ 
-        if (KeyObjCheck($(this))) {
-            var ID = $(this).attr("ID");
-            window[ID] = new KeyFile(ID,$(this));               
-            window[ID].Init();     
-        }                
+        var ID = $(this).attr("ID");
+        window[ID] = new KeyFile(ID,$(this));               
+        window[ID].Init();             
     });     
 });
 
@@ -543,6 +541,7 @@ KeyFile.prototype.Clear = function(){
     this._FilesArray = [];
     this._FileList.empty();
 }
+
 
 
 
