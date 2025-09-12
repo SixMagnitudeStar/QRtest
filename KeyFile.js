@@ -253,6 +253,7 @@ KeyFile.prototype.Init = function(){
         alert('點相機');
         if (!this.Enabled){
             return;
+        }
         alert('啟用設定');
 
         FileInput.attr('capture','environment');
@@ -542,6 +543,7 @@ KeyFile.prototype.Clear = function(){
     this._FilesArray = [];
     this._FileList.empty();
 }
+
 
 
 
